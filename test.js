@@ -507,6 +507,22 @@ test('Forwarded: for="10.0.0.1:1337";host=example.com', function (t) {
   })
 })
 
+test('Forwarded: for="[2001:db8:cafe::17]:1337";host=example.com', function (t) {
+  t.plan(1)
+  const opts = {headers: {
+    'Forwarded': 'for="[2001:db8:cafe::17]:1337";host=example.com'
+  }}
+  http(opts, function (result, port) {
+    t.deepEqual(result, {
+      protocol: 'http:',
+      hostname: 'example.com',
+      port: 1337,
+      pathname: '/',
+      full: 'http://example.com:1337/'
+    })
+  })
+})
+
 test('Forwarded: host="example.com:1337/some/path?key=value#hash"', function (t) {
   t.plan(1)
   const opts = {
