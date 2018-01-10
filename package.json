@@ -1,6 +1,6 @@
 {
   "name": "original-url",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Reconstruct the original URL used in an HTTP request based on the HTTP request headers",
   "main": "index.js",
   "dependencies": {
@@ -44,5 +44,9 @@
   "bugs": {
     "url": "https://github.com/watson/original-url/issues"
   },
-  "homepage": "https://github.com/watson/original-url#readme"
+  "homepage": "https://github.com/watson/original-url#readme",
+  "coordinates": [
+    55.6773705,
+    12.5614183
+  ]
 }
