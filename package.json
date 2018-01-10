@@ -1,6 +1,6 @@
 {
   "name": "original-url",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reconstruct the original URL used in an HTTP request based on the HTTP request headers",
   "main": "index.js",
   "dependencies": {
