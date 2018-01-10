@@ -67,7 +67,7 @@ $ curl -H 'Forwarded: proto=https; host=example.com; for="10.0.0.1:1234"' localh
 Original URL: https://example.com:1234/sub/path?key=value
 
 $ curl -H 'X-Forwarded-Host: example.com' -H 'X-Forwarded-Host: proxy.local' localhost:1337
-Original URL: https://example.com/
+Original URL: http://example.com/
 ```
 
 ## API
