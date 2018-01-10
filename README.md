@@ -79,13 +79,13 @@ in the form of
 [`http.IncomingMessage`](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
 
 When called, the function returns a `result` object with a `full`
-property containing the fullly resolved URL. The `result` object will
+property containing the fully resolved URL. The `result` object will
 also contain any other property normally returned by the Node.js core
 [`url.parse`](https://nodejs.org/api/url.html#url_url_parse_urlstring_parsequerystring_slashesdenotehost)
 function.
 
-If the protocol or hostname for some reason cannot be determined,
-`result.full` will not be present.
+If the hostname for some reason cannot be determined, `result.full` will
+not be present.
 
 ## License
 
