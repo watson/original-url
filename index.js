@@ -7,7 +7,7 @@ module.exports = function (req) {
   const raw = req.originalUrl || req.url
   const url = parseUrl(raw || '')
   const secure = req.secure || (req.connection && req.connection.encrypted)
-  const result = {}
+  const result = { raw: raw }
   let host
 
   if (req.headers.forwarded) {

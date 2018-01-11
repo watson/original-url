@@ -16,7 +16,8 @@ test('http - root, no special http headers', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'http://localhost:' + port + '/'
+      full: 'http://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -29,7 +30,8 @@ test('http - path, no special http headers', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/some/path',
-      full: 'http://localhost:' + port + '/some/path'
+      full: 'http://localhost:' + port + '/some/path',
+      raw: '/some/path'
     })
   })
 })
@@ -43,7 +45,8 @@ test('http - path+query params, no special http headers', function (t) {
       port: port,
       pathname: '/some/path',
       search: '?key=value',
-      full: 'http://localhost:' + port + '/some/path?key=value'
+      full: 'http://localhost:' + port + '/some/path?key=value',
+      raw: '/some/path?key=value'
     })
   })
 })
@@ -60,7 +63,8 @@ test('https - root, no special http headers', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'https://localhost:' + port + '/'
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -73,7 +77,8 @@ test('https - path, no special http headers', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/some/path',
-      full: 'https://localhost:' + port + '/some/path'
+      full: 'https://localhost:' + port + '/some/path',
+      raw: '/some/path'
     })
   })
 })
@@ -87,7 +92,8 @@ test('https - path+query params, no special http headers', function (t) {
       port: port,
       pathname: '/some/path',
       search: '?key=value',
-      full: 'https://localhost:' + port + '/some/path?key=value'
+      full: 'https://localhost:' + port + '/some/path?key=value',
+      raw: '/some/path?key=value'
     })
   })
 })
@@ -107,7 +113,8 @@ test('X-Forwarded-Proto: https', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'https://localhost:' + port + '/'
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -123,7 +130,8 @@ test('X-Forwarded-Proto - multiple headers', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'https://localhost:' + port + '/'
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -139,7 +147,8 @@ test('X-Forwarded-Protocol: https', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'https://localhost:' + port + '/'
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -155,7 +164,8 @@ test('X-Forwarded-Protocol - multiple headers', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'https://localhost:' + port + '/'
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -171,7 +181,8 @@ test('X-Url-Scheme: https', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'https://localhost:' + port + '/'
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -187,7 +198,8 @@ test('X-Url-Scheme - multiple headers', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'https://localhost:' + port + '/'
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -203,7 +215,8 @@ test('Front-End-Https: on', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'https://localhost:' + port + '/'
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -219,7 +232,8 @@ test('Front-End-Https - multiple headers', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'https://localhost:' + port + '/'
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -235,7 +249,8 @@ test('X-Forwarded-Ssl: on', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'https://localhost:' + port + '/'
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -251,7 +266,8 @@ test('X-Forwarded-Ssl - multiple headers', function (t) {
       hostname: 'localhost',
       port: port,
       pathname: '/',
-      full: 'https://localhost:' + port + '/'
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
     })
   })
 })
@@ -270,7 +286,8 @@ test('Host: example.com', function (t) {
       protocol: 'http:',
       hostname: 'example.com',
       pathname: '/',
-      full: 'http://example.com/'
+      full: 'http://example.com/',
+      raw: '/'
     })
   })
 })
@@ -286,7 +303,8 @@ test('Host: example.com:1337', function (t) {
       hostname: 'example.com',
       port: 1337,
       pathname: '/',
-      full: 'http://example.com:1337/'
+      full: 'http://example.com:1337/',
+      raw: '/'
     })
   })
 })
@@ -307,7 +325,8 @@ test('Host: example.com:1337/some/path?key=value#hash', function (t) {
       pathname: '/some/other/path',
       search: '?key=value',
       hash: '#hash',
-      full: 'http://example.com:1337/some/other/path?key=value#hash'
+      full: 'http://example.com:1337/some/other/path?key=value#hash',
+      raw: '/some/other/path?key=value'
     })
   })
 })
@@ -328,7 +347,8 @@ test('Host: https://example.com:1337/some/path?key=value#hash', function (t) {
       pathname: '/some/other/path',
       search: '?key=value',
       hash: '#hash',
-      full: 'https://example.com:1337/some/other/path?key=value#hash'
+      full: 'https://example.com:1337/some/other/path?key=value#hash',
+      raw: '/some/other/path?key=value'
     })
   })
 })
@@ -343,7 +363,8 @@ test('X-Forwarded-Host: example.com', function (t) {
       protocol: 'http:',
       hostname: 'example.com',
       pathname: '/',
-      full: 'http://example.com/'
+      full: 'http://example.com/',
+      raw: '/'
     })
   })
 })
@@ -358,7 +379,8 @@ test('X-Forwarded-Host - multiple headers', function (t) {
       protocol: 'http:',
       hostname: 'example.com',
       pathname: '/',
-      full: 'http://example.com/'
+      full: 'http://example.com/',
+      raw: '/'
     })
   })
 })
@@ -374,7 +396,8 @@ test('X-Forwarded-Host: example.com:1337', function (t) {
       hostname: 'example.com',
       port: 1337,
       pathname: '/',
-      full: 'http://example.com:1337/'
+      full: 'http://example.com:1337/',
+      raw: '/'
     })
   })
 })
@@ -395,7 +418,8 @@ test('X-Forwarded-Host: example.com:1337/some/path?key=value#hash', function (t)
       pathname: '/some/other/path',
       search: '?key=value',
       hash: '#hash',
-      full: 'http://example.com:1337/some/other/path?key=value#hash'
+      full: 'http://example.com:1337/some/other/path?key=value#hash',
+      raw: '/some/other/path?key=value'
     })
   })
 })
@@ -416,7 +440,8 @@ test('X-Forwarded-Host: https://example.com:1337/some/path?key=value#hash', func
       pathname: '/some/other/path',
       search: '?key=value',
       hash: '#hash',
-      full: 'https://example.com:1337/some/other/path?key=value#hash'
+      full: 'https://example.com:1337/some/other/path?key=value#hash',
+      raw: '/some/other/path?key=value'
     })
   })
 })
@@ -436,7 +461,8 @@ test('X-Forwarded-Port: 1337', function (t) {
       hostname: 'localhost',
       port: 1337,
       pathname: '/',
-      full: 'http://localhost:1337/'
+      full: 'http://localhost:1337/',
+      raw: '/'
     })
   })
 })
@@ -452,7 +478,8 @@ test('X-Forwarded-Port - multiple headers', function (t) {
       hostname: 'localhost',
       port: 1337,
       pathname: '/',
-      full: 'http://localhost:1337/'
+      full: 'http://localhost:1337/',
+      raw: '/'
     })
   })
 })
@@ -471,7 +498,8 @@ test('Forwarded: host=example.com', function (t) {
       protocol: 'http:',
       hostname: 'example.com',
       pathname: '/',
-      full: 'http://example.com/'
+      full: 'http://example.com/',
+      raw: '/'
     })
   })
 })
@@ -486,7 +514,8 @@ test('Forwarded: host=example.com; proto=https', function (t) {
       protocol: 'https:',
       hostname: 'example.com',
       pathname: '/',
-      full: 'https://example.com/'
+      full: 'https://example.com/',
+      raw: '/'
     })
   })
 })
@@ -502,7 +531,8 @@ test('Forwarded: for="10.0.0.1:1337";host=example.com', function (t) {
       hostname: 'example.com',
       port: 1337,
       pathname: '/',
-      full: 'http://example.com:1337/'
+      full: 'http://example.com:1337/',
+      raw: '/'
     })
   })
 })
@@ -518,7 +548,8 @@ test('Forwarded: for="[2001:db8:cafe::17]:1337";host=example.com', function (t) 
       hostname: 'example.com',
       port: 1337,
       pathname: '/',
-      full: 'http://example.com:1337/'
+      full: 'http://example.com:1337/',
+      raw: '/'
     })
   })
 })
@@ -539,7 +570,8 @@ test('Forwarded: host="example.com:1337/some/path?key=value#hash"', function (t)
       pathname: '/some/other/path',
       search: '?key=value',
       hash: '#hash',
-      full: 'http://example.com:1337/some/other/path?key=value#hash'
+      full: 'http://example.com:1337/some/other/path?key=value#hash',
+      raw: '/some/other/path?key=value'
     })
   })
 })
@@ -560,7 +592,8 @@ test('Forwarded: host="https://example.com:1337/some/path?key=value#hash"', func
       pathname: '/some/other/path',
       search: '?key=value',
       hash: '#hash',
-      full: 'https://example.com:1337/some/other/path?key=value#hash'
+      full: 'https://example.com:1337/some/other/path?key=value#hash',
+      raw: '/some/other/path?key=value'
     })
   })
 })
@@ -581,7 +614,8 @@ test('Forwarded: host="https://example.com:1337/some/path?key=value#hash"; proto
       pathname: '/some/other/path',
       search: '?key=value',
       hash: '#hash',
-      full: 'http://example.com:1234/some/other/path?key=value#hash'
+      full: 'http://example.com:1234/some/other/path?key=value#hash',
+      raw: '/some/other/path?key=value'
     })
   })
 })
@@ -605,7 +639,8 @@ test('Forwarded - multiple headers', function (t) {
       pathname: '/some/other/path',
       search: '?key=value',
       hash: '#hash',
-      full: 'http://example.com:1234/some/other/path?key=value#hash'
+      full: 'http://example.com:1234/some/other/path?key=value#hash',
+      raw: '/some/other/path?key=value'
     })
   })
 })
@@ -618,7 +653,8 @@ test('No Host header', function (t) {
   const mockReq = {url: '/', headers: {}, connection: {}}
   t.deepEqual(originalUrl(mockReq), {
     protocol: 'http:',
-    pathname: '/'
+    pathname: '/',
+    raw: '/'
   })
   t.end()
 })
