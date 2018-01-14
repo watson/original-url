@@ -18,7 +18,6 @@ Supported HTTP headers:
 - `X-Forwarded-Ssl`
 - `X-Forwarded-Host`
 - `X-Forwarded-Port`
-- `X-Real-Port`
 
 If the protocol (http vs https) cannot be determined based on the above
 headers, the `encrypted` flag on the TLS connection is used.

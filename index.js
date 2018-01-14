@@ -54,7 +54,6 @@ module.exports = function (req) {
   // port
   if (url.port) result.port = Number(url.port)
   else if (req.headers['x-forwarded-port']) result.port = Number(getFirstHeader(req, 'x-forwarded-port'))
-  else if (req.headers['x-real-port']) result.port = Number(getFirstHeader(req, 'x-real-port'))
   else if (host.port) result.port = Number(host.port)
 
   // pathname

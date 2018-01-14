@@ -484,40 +484,6 @@ test('X-Forwarded-Port - multiple headers', function (t) {
   })
 })
 
-test('X-Real-Port: 1337', function (t) {
-  t.plan(1)
-  const opts = {headers: {
-    'X-Real-Port': '1337'
-  }}
-  http(opts, function (result, port) {
-    t.deepEqual(result, {
-      protocol: 'http:',
-      hostname: 'localhost',
-      port: 1337,
-      pathname: '/',
-      full: 'http://localhost:1337/',
-      raw: '/'
-    })
-  })
-})
-
-test('X-Real-Port - multiple headers', function (t) {
-  t.plan(1)
-  const opts = {headers: {
-    'X-Real-Port': ['1337', '80']
-  }}
-  http(opts, function (result, port) {
-    t.deepEqual(result, {
-      protocol: 'http:',
-      hostname: 'localhost',
-      port: 1337,
-      pathname: '/',
-      full: 'http://localhost:1337/',
-      raw: '/'
-    })
-  })
-})
-
 /**
  * Forwarded header
  */
