@@ -51,6 +51,38 @@ test('http - path+query params, no special http headers', function (t) {
   })
 })
 
+test('http - IPv4 host header', function (t) {
+  t.plan(1)
+  const opts = {headers: {
+    'Host': '127.0.0.1'
+  }}
+  http(opts, function (result, port) {
+    t.deepEqual(result, {
+      protocol: 'http:',
+      hostname: '127.0.0.1',
+      pathname: '/',
+      full: 'http://127.0.0.1/',
+      raw: '/'
+    })
+  })
+})
+
+test('http - IPv6 host header', function (t) {
+  t.plan(1)
+  const opts = {headers: {
+    'Host': '[::1]'
+  }}
+  http(opts, function (result, port) {
+    t.deepEqual(result, {
+      protocol: 'http:',
+      hostname: '[::1]',
+      pathname: '/',
+      full: 'http://[::1]/',
+      raw: '/'
+    })
+  })
+})
+
 /**
  * Basic HTTPS
  */

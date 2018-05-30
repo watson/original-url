@@ -2,6 +2,7 @@
 
 const parseUrl = require('url').parse
 const parseForwarded = require('forwarded-parse')
+const net = require('net')
 
 module.exports = function (req) {
   const raw = req.originalUrl || req.url
@@ -50,6 +51,9 @@ module.exports = function (req) {
   // hostname
   if (url.hostname) result.hostname = url.hostname
   else if (host.hostname) result.hostname = host.hostname
+
+  // fix for IPv6 literal bug in legacy url - see https://github.com/watson/original-url/issues/3
+  if (net.isIPv6(result.hostname)) result.hostname = '[' + result.hostname + ']'
 
   // port
   if (url.port) result.port = Number(url.port)
