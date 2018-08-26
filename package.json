@@ -8,8 +8,8 @@
   },
   "devDependencies": {
     "https-pem": "^2.0.0",
-    "standard": "^10.0.3",
-    "tape": "^4.8.0"
+    "standard": "^11.0.1",
+    "tape": "^4.9.1"
   },
   "scripts": {
     "test": "standard && node test.js"
