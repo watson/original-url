@@ -22,6 +22,7 @@ Supported HTTP headers:
 If the protocol (http vs https) cannot be determined based on the above
 headers, the `encrypted` flag on the TLS connection is used.
 
+[![npm](https://img.shields.io/npm/v/original-url.svg)](https://www.npmjs.com/package/original-url)
 [![Build status](https://travis-ci.org/watson/original-url.svg?branch=master)](https://travis-ci.org/watson/original-url)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
@@ -89,4 +90,4 @@ not be present.
 
 ## License
 
-MIT
+[MIT](LICENSE)
