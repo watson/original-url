@@ -12,7 +12,8 @@
     "tape": "^4.9.1"
   },
   "scripts": {
-    "test": "standard && node test.js"
+    "test": "standard && node test.js",
+    "format": "standard --fix"
   },
   "repository": {
     "type": "git",

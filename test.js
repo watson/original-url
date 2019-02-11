@@ -691,6 +691,11 @@ test('No Host header', function (t) {
   t.end()
 })
 
+test('Empty arguments', function (t) {
+  t.deepEqual(originalUrl(), undefined)
+  t.end()
+})
+
 /**
  * Utils
  */
