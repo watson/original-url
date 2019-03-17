@@ -12,6 +12,8 @@
     "tape": "^4.9.1"
   },
   "scripts": {
+    "format": "standard --fix",
+    "bench": "node benchmark/benchmark.js",
     "test": "standard && node test.js"
   },
   "repository": {
