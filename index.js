@@ -97,7 +97,7 @@ function getFirstHeader (req, header) {
 
 function parsePartialURL (url) {
   const containsProtocol = url.indexOf('://') !== -1
-  url = parseUrl(containsProtocol ? url : 'invalid://' + url)
-  if (!containsProtocol) delete url.protocol
-  return url
+  const result = parseUrl(containsProtocol ? url : 'invalid://' + url)
+  if (!containsProtocol) result.protocol = ''
+  return result
 }

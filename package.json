@@ -1,6 +1,6 @@
 {
   "name": "original-url",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Reconstruct the original URL used in an HTTP request based on the HTTP request headers",
   "main": "index.js",
   "dependencies": {
@@ -12,8 +12,9 @@
     "tape": "^4.9.1"
   },
   "scripts": {
-    "test": "standard && node test.js",
-    "format": "standard --fix"
+    "format": "standard --fix",
+    "bench": "node benchmark/benchmark.js",
+    "test": "standard && node test.js"
   },
   "repository": {
     "type": "git",
@@ -47,7 +48,7 @@
   },
   "homepage": "https://github.com/watson/original-url#readme",
   "coordinates": [
-    55.777263,
-    12.592294
+    55.778257,
+    12.593204
   ]
 }
