@@ -5,11 +5,16 @@ const parseForwarded = require('forwarded-parse')
 const net = require('net')
 
 module.exports = function (req) {
+  req = req || {}
   const raw = req.originalUrl || req.url
   const url = parseUrl(raw || '')
   const secure = req.secure || (req.connection && req.connection.encrypted)
   const result = { raw: raw }
   let host
+
+  if (!req.headers) {
+    return undefined
+  }
 
   if (req.headers.forwarded) {
     let forwarded = getFirstHeader(req, 'forwarded')
