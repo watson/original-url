@@ -692,6 +692,71 @@ test('No Host header', function (t) {
 })
 
 /**
+ * HTTP2
+ */
+
+test('HTTP2 - Authority: example.com', function (t) {
+  t.plan(1)
+  const headers = {
+    ':authority': 'example.com'
+  }
+  http2('https://localhost:{{port}}', headers, function (result, port) {
+    t.deepEqual(result, {
+      protocol: 'https:',
+      hostname: 'example.com',
+      pathname: '/',
+      full: 'https://example.com/',
+      raw: '/'
+    })
+  })
+})
+
+test('HTTP2 - X-Forwarded-Proto: http', function (t) {
+  t.plan(1)
+  const headers = {
+    'X-Forwarded-Proto': 'http'
+  }
+  http2('https://localhost:{{port}}', headers, function (result, port) {
+    t.deepEqual(result, {
+      protocol: 'http:',
+      hostname: 'localhost',
+      port: port,
+      pathname: '/',
+      full: 'http://localhost:' + port + '/',
+      raw: '/'
+    })
+  })
+})
+
+test('HTTP2 - root, no special http headers', function (t) {
+  t.plan(1)
+  http2('https://localhost:{{port}}', {}, function (result, port) {
+    t.deepEqual(result, {
+      protocol: 'https:',
+      hostname: 'localhost',
+      port: port,
+      pathname: '/',
+      full: 'https://localhost:' + port + '/',
+      raw: '/'
+    })
+  })
+})
+
+test('HTTP2 - path, no special http headers', function (t) {
+  t.plan(1)
+  http2('https://localhost:{{port}}/some/path', {}, function (result, port) {
+    t.deepEqual(result, {
+      protocol: 'https:',
+      hostname: 'localhost',
+      port: port,
+      pathname: '/some/path',
+      full: 'https://localhost:' + port + '/some/path',
+      raw: '/some/path'
+    })
+  })
+})
+
+/**
  * Utils
  */
 
@@ -739,6 +804,38 @@ function https (opts, onRequest) {
       })
     })
     req.end()
+  })
+
+  return server
+}
+
+function http2 (url, headers, onRequest) {
+  const _http2 = require('http2')
+
+  const server = _http2.createSecureServer(pem, function (req, res) {
+    onRequest(originalUrl(req), server.address().port)
+    res.end()
+  })
+
+  server.listen(function () {
+    url = url.replace('{{port}}', server.address().port)
+
+    const {origin, pathname} = new URL(url)
+
+    const client = _http2.connect(origin, {
+      rejectUnauthorized: false
+    })
+
+    const req = client.request({
+      ':path': pathname,
+      ...headers
+    })
+
+    req.on('response', () => {
+      client.close()
+      req.end()
+      server.close()
+    })
   })
 
   return server

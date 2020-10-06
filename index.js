@@ -7,7 +7,7 @@ const net = require('net')
 module.exports = function (req) {
   const raw = req.originalUrl || req.url
   const url = parseUrl(raw || '')
-  const secure = req.secure || (req.connection && req.connection.encrypted)
+  const secure = req.secure || (req.connection && req.connection.encrypted) || req.scheme === 'https'
   const result = { raw: raw }
   let host
 
@@ -32,6 +32,8 @@ module.exports = function (req) {
   if (!host) {
     if (typeof req.headers.host === 'string') {
       host = parsePartialURL(req.headers.host)
+    } else if (typeof req.headers[':authority'] === 'string') {
+      host = parsePartialURL(req.headers[':authority'])
     } else {
       host = {}
     }
