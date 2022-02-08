@@ -7,7 +7,7 @@ const net = require('net')
 module.exports = function (req) {
   const raw = req.originalUrl || req.url
   const url = parseUrl(raw || '')
-  const secure = req.secure || (req.connection && req.connection.encrypted)
+  const secure = req.secure || (req.socket && req.socket.encrypted)
   const result = { raw: raw }
   let host
 
