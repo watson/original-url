@@ -1,12 +1,12 @@
 'use strict'
 
-const parseUrl = require('url').parse
+const URL = require('url').URL
 const parseForwarded = require('forwarded-parse')
 const net = require('net')
 
 module.exports = function (req) {
   const raw = req.originalUrl || req.url
-  const url = parseUrl(raw || '')
+  const url = parsePartialURL(raw)
   const secure = req.secure || (req.connection && req.connection.encrypted)
   const result = { raw: raw }
   let host
@@ -18,6 +18,7 @@ module.exports = function (req) {
       // passed through multiple proxies
       forwarded = parseForwarded(forwarded)[0]
       host = parsePartialURL(forwarded.host)
+      console.log('forwarded host', host)
       if (forwarded.for) {
         const conn = forwarded.for.split(']') // in case of IPv6 addr: [2001:db8:cafe::17]:1337
         const port = conn[conn.length - 1].split(':')[1]
@@ -92,7 +93,15 @@ function getFirstHeader (req, header) {
 
 function parsePartialURL (url) {
   const containsProtocol = url.indexOf('://') !== -1
-  const result = parseUrl(containsProtocol ? url : 'invalid://' + url)
-  if (!containsProtocol) result.protocol = ''
+  const urlInstance = new URL(containsProtocol ? url : 'invalid://' + url)
+  const props = ['hash', 'host', 'hostname', 'href', 'pathname', 'protocol', 'port', 'pathname', 'search']
+  const result = {}
+  for (const p of props) {
+    result[p] = urlInstance[p]
+  }
+  if (!containsProtocol) {
+    result.protocol = ''
+    result.href = result.href.replace('invalid://', '')
+  }
   return result
 }
