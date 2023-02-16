@@ -18,7 +18,6 @@ module.exports = function (req) {
       // passed through multiple proxies
       forwarded = parseForwarded(forwarded)[0]
       host = parsePartialURL(forwarded.host)
-      console.log('forwarded host', host)
       if (forwarded.for) {
         const conn = forwarded.for.split(']') // in case of IPv6 addr: [2001:db8:cafe::17]:1337
         const port = conn[conn.length - 1].split(':')[1]
