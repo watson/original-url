@@ -94,10 +94,9 @@ function getFirstHeader (req, header) {
 function parsePartialURL (url) {
   const containsProtocol = url.indexOf('://') !== -1
   const urlInstance = new URL(containsProtocol ? url : 'invalid://' + url)
-  const props = ['hash', 'host', 'hostname', 'href', 'pathname', 'protocol', 'port', 'pathname', 'search']
   const result = {}
-  for (const p of props) {
-    result[p] = urlInstance[p]
+  for (const prop in urlInstance) {
+    if (typeof urlInstance[prop] !== 'function') result[prop] = urlInstance[prop]
   }
   if (!containsProtocol) {
     result.protocol = ''
