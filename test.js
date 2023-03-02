@@ -22,6 +22,34 @@ test('http - root, no special http headers', function (t) {
   })
 })
 
+test('http - double slash, no special http headers', function (t) {
+  t.plan(1)
+  http({path: '//some/path'}, function (result, port) {
+    t.deepEqual(result, {
+      protocol: 'http:',
+      hostname: 'localhost',
+      port: port,
+      pathname: '//some/path',
+      full: 'http://localhost:' + port + '//some/path',
+      raw: '//some/path'
+    })
+  })
+})
+
+test('http - auth like, no special http headers', function (t) {
+  t.plan(1)
+  http({path: '//user@pass'}, function (result, port) {
+    t.deepEqual(result, {
+      protocol: 'http:',
+      hostname: 'localhost',
+      port: port,
+      pathname: '//user@pass',
+      full: 'http://localhost:' + port + '//user@pass',
+      raw: '//user@pass'
+    })
+  })
+})
+
 test('http - path, no special http headers', function (t) {
   t.plan(1)
   http({path: '/some/path'}, function (result, port) {
@@ -111,6 +139,34 @@ test('https - path, no special http headers', function (t) {
       pathname: '/some/path',
       full: 'https://localhost:' + port + '/some/path',
       raw: '/some/path'
+    })
+  })
+})
+
+test('http - double slash, no special http headers', function (t) {
+  t.plan(1)
+  https({path: '//some/path'}, function (result, port) {
+    t.deepEqual(result, {
+      protocol: 'https:',
+      hostname: 'localhost',
+      port: port,
+      pathname: '//some/path',
+      full: 'https://localhost:' + port + '//some/path',
+      raw: '//some/path'
+    })
+  })
+})
+
+test('http - auth like, no special http headers', function (t) {
+  t.plan(1)
+  https({path: '//user@pass'}, function (result, port) {
+    t.deepEqual(result, {
+      protocol: 'https:',
+      hostname: 'localhost',
+      port: port,
+      pathname: '//user@pass',
+      full: 'https://localhost:' + port + '//user@pass',
+      raw: '//user@pass'
     })
   })
 })
@@ -687,6 +743,15 @@ test('No Host header', function (t) {
     protocol: 'http:',
     pathname: '/',
     raw: '/'
+  })
+  t.end()
+})
+
+test('Weird auth string', function (t) {
+  const mockReq = {url: '@@', headers: {}, connection: {}}
+  t.deepEqual(originalUrl(mockReq), {
+    protocol: 'http:',
+    raw: '@@'
   })
   t.end()
 })

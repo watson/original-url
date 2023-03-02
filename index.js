@@ -1,18 +1,19 @@
 'use strict'
 
-const parseUrl = require('url').parse
+const PROTOCOL_PLACEHOLDER = 'protocol-placeholder:'
+const { URL, parse } = require('url')
 const parseForwarded = require('forwarded-parse')
 const net = require('net')
 
 module.exports = function (req) {
   const raw = req.originalUrl || req.url
-  const url = parseUrl(raw || '')
+  const url = parsePartialURL(raw)
   const secure = req.secure || (req.connection && req.connection.encrypted)
   const result = { raw: raw }
-  let host
+  let host, forwarded
 
   if (req.headers.forwarded) {
-    let forwarded = getFirstHeader(req, 'forwarded')
+    forwarded = getFirstHeader(req, 'forwarded')
     try {
       // Always choose the original (first) Forwarded pair in case the request
       // passed through multiple proxies
@@ -23,7 +24,6 @@ module.exports = function (req) {
         const port = conn[conn.length - 1].split(':')[1]
         if (port) host.port = Number(port)
       }
-      if (forwarded.proto) host.protocol = forwarded.proto + ':'
     } catch (e) {}
   } else if (req.headers['x-forwarded-host']) {
     host = parsePartialURL(getFirstHeader(req, 'x-forwarded-host'))
@@ -38,13 +38,14 @@ module.exports = function (req) {
   }
 
   // protocol
-  if (url.protocol) result.protocol = url.protocol
+  if (url.protocol !== PROTOCOL_PLACEHOLDER) result.protocol = url.protocol
   else if (req.headers['x-forwarded-proto']) result.protocol = getFirstHeader(req, 'x-forwarded-proto') + ':'
   else if (req.headers['x-forwarded-protocol']) result.protocol = getFirstHeader(req, 'x-forwarded-protocol') + ':'
   else if (req.headers['x-url-scheme']) result.protocol = getFirstHeader(req, 'x-url-scheme') + ':'
   else if (req.headers['front-end-https']) result.protocol = getFirstHeader(req, 'front-end-https') === 'on' ? 'https:' : 'http:'
   else if (req.headers['x-forwarded-ssl']) result.protocol = getFirstHeader(req, 'x-forwarded-ssl') === 'on' ? 'https:' : 'http:'
-  else if (host.protocol) result.protocol = host.protocol
+  else if (forwarded && forwarded.proto) result.protocol = forwarded.proto + ':'
+  else if (host.protocol && host.protocol !== PROTOCOL_PLACEHOLDER) result.protocol = host.protocol
   else if (secure) result.protocol = 'https:'
   else result.protocol = 'http:'
 
@@ -92,7 +93,10 @@ function getFirstHeader (req, header) {
 
 function parsePartialURL (url) {
   const containsProtocol = url.indexOf('://') !== -1
-  const result = parseUrl(containsProtocol ? url : 'invalid://' + url)
-  if (!containsProtocol) result.protocol = ''
-  return result
+  const urlToParse = containsProtocol ? url : PROTOCOL_PLACEHOLDER + '//' + url
+  try {
+    return new URL(urlToParse)
+  } catch (e) {
+    return parse(urlToParse)
+  }
 }
