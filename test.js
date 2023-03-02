@@ -747,6 +747,15 @@ test('No Host header', function (t) {
   t.end()
 })
 
+test('Weird auth string', function (t) {
+  const mockReq = {url: '@@', headers: {}, connection: {}}
+  t.deepEqual(originalUrl(mockReq), {
+    protocol: 'http:',
+    raw: '@@'
+  })
+  t.end()
+})
+
 /**
  * Utils
  */
