@@ -7,7 +7,7 @@ const net = require('net')
 module.exports = function (req) {
   const raw = req.originalUrl || req.url
   const url = parseUrl(raw || '')
-  const secure = req.secure || (req.connection && req.connection.encrypted)
+  const secure = safeGetReqSecure(req) || (req.connection && req.connection.encrypted)
   const result = { raw: raw }
   let host
 
@@ -95,4 +95,12 @@ function parsePartialURL (url) {
   const result = parseUrl(containsProtocol ? url : 'invalid://' + url)
   if (!containsProtocol) result.protocol = ''
   return result
+}
+
+function safeGetReqSecure(req) {
+  try {
+    return req.secure
+  } catch(err) {
+    return false
+  }
 }
